@@ -7,7 +7,7 @@ const template =
 
     public sealed class {{type}}Integration: TextIntegration<{{type}}> {
     
-        protected {{type}}Integration("{{fileName}}") {
+        protected {{type}}Integration(): base("{{fileName}}") {
             _fileName = fileName;
         }
     
@@ -35,7 +35,9 @@ const integrations = lines.map(l => {
     }
 })
 
-fs.mkdirSync("out")
+if (!fs.existsSync("out")) {
+    fs.mkdirSync("out")
+}
 
 const compiledTemplate = handlebars.compile(template)
 integrations.forEach(i => {
